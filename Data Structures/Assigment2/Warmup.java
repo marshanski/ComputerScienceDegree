@@ -25,12 +25,9 @@ public class Warmup {
 
     public static int consistentBinSearch(int[] arr, int x, Stack myStack) 
     {
-        // TODO: implement your code here
-    	
-    	// Your implementation should contain a this line:
+    
         int left=0, right = arr.length-1;
-
-        BinSearch(arr,x,left,right,myStack);
+        return BinSearch(arr,x,left,right,myStack);
         
     }
 
@@ -42,24 +39,24 @@ public class Warmup {
     	int last;
         if (inconsistencies >0)
         {
-            last = myStack.pop();
+            last = (int)myStack.pop();
             for (int i =0 ;i<= inconsistencies ;i++)
             {
                 if(right < last)
                     right = (last *2)+1;
                 else
                     left = (last/2)-1;
-                last = myStack.pop();
+                last = (int)myStack.pop();
             }
         }
-        BinSearch(arr,x,left,right,myStack);
+        return BinSearch(arr,x,left,right,myStack);
+
 
     }
     public static int BinSearch(int[] arr, int x,int left, int right ,Stack myStack) 
     {
         if(left>right)
             return -1;
-            
         int middle = (left+right)/2;
 
         if(arr[middle]== x)

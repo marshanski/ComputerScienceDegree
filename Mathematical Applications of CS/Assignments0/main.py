@@ -59,4 +59,19 @@ ax[1].set_xlabel("Years")
 ax[1].set_ylabel("Earthquakes")
 ax[1].set_title("with logs")
 
+
+
 plt.show()
+
+
+def plotFunction2(f,g,lowerBound,upperBound,logN):
+    scope = numpy.linspace(lowerBound,upperBound, 100) 
+    plt.figure(figsize=(8, 3)).set_dpi(120)
+    plt.axhline(0, ls='--', c='black', lw=0.5)
+    plt.axvline(0, ls='--', c='black', lw=0.5)
+    plt.xlabel('X', fontsize=18)
+    plt.ylabel('Y', fontsize=18)
+    for n in logN:
+        y = [float(abs(f(x,n)-g(x))) for x in scope ]
+        plt.plot(scope, y, label="ABS error(%d)"% n,lw=1)
+    plt.legend()
