@@ -1,4 +1,4 @@
-
+package code;
 
 public class BacktrackingArray implements Array<Integer>, Backtrack {
     private Stack stack;
@@ -11,7 +11,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     private static final int INSERT         =  1;
     private static final int DELETE         =  2;
     
-    // TODO: implement your code here
+  
 
     // Do not change the constructor's signature
     public BacktrackingArray(Stack stack, int size) 
@@ -274,7 +274,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     {
         if(this.reCallOn && !(this.reCallStack.isEmpty()))
         {
-            lastAction = (int)this.reCallStack.pop();
+            int lastAction = (int)this.reCallStack.pop();
             switch(lastAction)
             {
                 case INSERT:

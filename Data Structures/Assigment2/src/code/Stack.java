@@ -1,11 +1,12 @@
-
+package code;
 
 import java.util.NoSuchElementException;
 
 public class Stack {
     private StackElement head = null;
 
-    private static class StackElement {
+    private static class StackElement
+     {
         Object value;
         StackElement next;
 

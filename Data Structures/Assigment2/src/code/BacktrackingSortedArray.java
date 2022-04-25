@@ -1,4 +1,4 @@
-
+package code;
 
 public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     private Stack stack;
