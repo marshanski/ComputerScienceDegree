@@ -18,7 +18,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     private static final int DeletOneSonLeft  =  5;
     private static final int DELETE           =  6;
 
-    // Do not change the constructor's signature
+//--------------------CONSTRUCTORS--------------------//
     public BacktrackingBST(Stack stack, Stack redoStack) 
     {
         this.stack     = stack;
@@ -27,7 +27,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
         this.stack.push(NEVERPERFORMED);
     }
 
-
+//--------------------RESET--------------------//	
     public void restartRecall()
     /*
     parametrs:
@@ -38,7 +38,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
         this.reCallOn = false;
         this.redoStack.clear();
     }
-
+//--------------------GET--------------------//	
     public Node getRoot()
     /*
     Parameters: 
