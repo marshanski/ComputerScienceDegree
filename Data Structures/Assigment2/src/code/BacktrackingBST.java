@@ -10,13 +10,16 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     private Stack redoStack;
     private BacktrackingBST.Node root = null;
     private boolean  reCallOn;
-    private static final int NEVERPERFORMED   =  0;
-    private static final int INSERT           =  1;
-    private static final int DELETELEAF       =  2;
-    private static final int DeleteTwoSONS    =  3;
-    private static final int DeletOneSonRight =  4;
-    private static final int DeletOneSonLeft  =  5;
-    private static final int DELETE           =  6;
+    private static final int NEVERPERFORMED    =  0;
+    private static final int INSERT            =  1;
+    private static final int DELETELEAF        =  2;
+    private static final int DeleteTwoSONS     =  3;
+    private static final int DeletOneSonRight  =  4;
+    private static final int DeletOneSonLeft   =  5;
+    private static final int DELETE            =  6;
+    private static final int DeleteNoRightSide =  7;
+    private static final int DeleteNoLeftSide  =  8;
+    private static final int OnlyRoot          =  9;
 
 //--------------------CONSTRUCTORS--------------------//
     public BacktrackingBST(Stack stack, Stack redoStack) 
@@ -175,12 +178,15 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
         
         if(root == null || node ==null )
             return;
+
+        
         if(this.search(root,node))//check that the node we got exist in the bst
         {
             int deleteProtocol = this.deleteProtocol(node);//check wich delete protocol we going to do
             this.stack.push(node.getKey());//push the value of the node 
             this.stack.push(node);//push the relevant node
-            this.delete2(node);//execute the deletion act
+            if(!this.DeleteRootSpecialCases(node))
+                this.delete2(node);//execute the deletion act
             this.stack.push(deleteProtocol);//push the delete protocol 
             this.restartRecall();//the recall function could only work after backtrack action.
             
@@ -195,9 +201,12 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     {
         if(root == null || node ==null )
             return;
+
+
         if(this.search(root,node))
         {
-            this.delete2(node);           
+            if(!this.DeleteRootSpecialCases(node))
+                this.delete2(node);//execute the deletion act      
         }
     }
 
@@ -211,6 +220,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
         {
             return;
         }
+
         //case 1: the node is leaf
         if(node.left == null && node.right == null)
         {
@@ -252,12 +262,44 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
 
     }
 
+    public boolean DeleteRootSpecialCases(Node node)
+    {
+        if(node == root && (node.left == null || node.right == null))
+        {
+            if(node.right == null&& node.left ==null)
+                root =null;
+            else if(node.right == null && node.left != null)
+            {
+                root             = node.left;
+                node.left.parent = null;
+            }
+            else
+            {
+                root = node.right;
+                node.right.parent = null;
+            }
+            return true;
+        }
+        else
+            return false;
+
+    }
+
     public int deleteProtocol(Node node)
     /*
     parmeter: node
     return  : the appopriate delete protocol of the node's deletion. If he has two sons, or if he is a leaf etc'.
     */
     {
+        if(node == root&&(node.left == null || node.right == null))
+        {
+            if(node.right == null&& node.left ==null)
+                return OnlyRoot;
+            else if(node.right == null && node.left != null)
+                return DeleteNoRightSide;
+            else
+                return DeleteNoLeftSide;
+        }
         // case 1: the node is leaf
         if(node.left == null && node.right == null)
             return DELETELEAF;
@@ -393,41 +435,58 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
         {
             case INSERT:
                 this.deleteWithoutStack(backTrackNode); //delete the node that we just insert
-                this.reCallOn = true;//turn on the recall switch
-                this.redoStack.push(backTrackNode);//push relevent node incase of recall 
-                this.redoStack.push(INSERT);//push the protocol incase of recll
+                this.updateBeforeRecall(backTrackNode, INSERT);
                 break;
             case DeleteTwoSONS:
                 Node newNode        = new Node(backTrackNode.getKey(), 1);//create a new node,because we delete one in our last action
                 backTrackNode.key   = key;//update the relevnt key with his old key
                 newNode.right       = backTrackNode.right;//connect the new node with the ancestry's of the relevnt node
+                //newNode.left        = backTrackNode.left;
                 backTrackNode.right = newNode;//connect the relevnt node to the new node we made
-                this.reCallOn = true;//turn on the recall switch
-                this.redoStack.push(backTrackNode);//push relevent node incase of recall 
-                this.redoStack.push(DELETE);//push the protocol incase of recll
+                newNode.parent      = backTrackNode;
+                this.updateBeforeRecall(backTrackNode, DELETE);
                 break;
 
             case DELETELEAF:
                 this.insertWithoutStack(backTrackNode);//insert the node that we just delet
-                this.reCallOn = true;//turn on the recall switch
-                this.redoStack.push(backTrackNode);//push relevent node incase of recall
-                this.redoStack.push(DELETE);//push the protocol incase of recll
+                this.updateBeforeRecall(backTrackNode, DELETE);
                 break;
 
             case DeletOneSonRight:
-                this.reCallOn = true;//turn on the recall switch
                 backTrackNode.parent.right = backTrackNode;//insert the node that we just delet
-                this.redoStack.push(backTrackNode);//push relevent node incase of recall
-                this.redoStack.push(DELETE);//push the protocol incase of recll
+                this.updateBeforeRecall(backTrackNode, DELETE);
                 break;
 
             case DeletOneSonLeft:
-                this.reCallOn = true;//turn on the recall switch
                 backTrackNode.parent.left = backTrackNode;//insert the node that we just delet
-                this.redoStack.push(backTrackNode);//push relevent node incase of recall
-                this.redoStack.push(DELETE);//push the protocol incase of recll
+                this.updateBeforeRecall(backTrackNode, DELETE);
+                break;
+
+            case OnlyRoot:
+                root = backTrackNode;
+                this.updateBeforeRecall(backTrackNode, DELETE);
+                break;
+
+            case DeleteNoLeftSide:
+                root                       = backTrackNode;
+                backTrackNode.right.parent = backTrackNode;
+                this.updateBeforeRecall(backTrackNode, DELETE);
+                break;
+
+            case DeleteNoRightSide:
+                root               = backTrackNode;
+                backTrackNode.left.parent = backTrackNode;
+                this.updateBeforeRecall(backTrackNode, DELETE);
                 break;
         }
+
+    }
+    public void updateBeforeRecall(Node node , int protocol)
+    {
+        this.reCallOn      = true;//turn on the recall switch
+        this.redoStack.push(node);//push relevent node incase of recall
+        this.redoStack.push(protocol);//push the protocol incase of recll
+
 
     }
 //--------------------RETRACK--------------------//
@@ -462,7 +521,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     */
     {
         if(root == null)
-            System.out.print("Empty tree");
+            System.out.println("Empty tree");
         else
         {
             this.printPreOrder(root);

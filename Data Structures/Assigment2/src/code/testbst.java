@@ -3,7 +3,7 @@ import code.BacktrackingBST;
 import code.BacktrackingBST.Node;
 import code.Stack.*;
 
-public class App 
+public class testbst 
 {
     public static void main(String[] args) throws Exception 
     {
@@ -26,19 +26,10 @@ public class App
         a.insert(f5);
         a.insert(f7);
         a.insert(f9);
+        a.insert(f3);
         a.insert(f4);
         a.insert(f1);
         //a.insert(f2);
-        /*a.insert(f4);
-        a.insert(f7);
-        a.insert(f9);
-        a.printPreOrder();*/
-        a.printPreOrder();
-        a.delete(f4);
-        a.printPreOrder();
-        a.backtrack();
-        a.printPreOrder();
-        a.retrack();
-        a.printPreOrder();
+        //a.delete(f5);
     }
 }
