@@ -80,22 +80,10 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     Description: The procedure will insert the value after he was deleted
     */
     {
-        if(this.length == 0 || index+1 == this.length)//incase we need to number in the end of the array
-            this.insertWithoutStack((int)this.stack.pop());
-        else
-        {
-            int temp   = arr[index],value = temp;//create a temp variable in oreder to exchange values
-            arr[index] = (int)this.stack.pop();// update the target index to his last value
-            for(int i= index+1 ;i<this.length; i++)//shifiting all the array right
-            {
-                value  = arr[i];
-                arr[i] = temp;
-                temp   = value;
-            }
-            if(index < this.length)//prevent a Placemention of value bigger then length in the last value of the array.
-                arr[this.length] = value;            
-        }
-        this.length++;//update the length size adter adding a number
+
+            arr[length] = arr[index];
+            arr[index]  = (int)this.stack.pop();    
+            this.length++;//update the length size adter adding a number
 
     }
 
@@ -112,6 +100,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
             {
                 arr[i] = arr[i+1];
             }
+            //arr[index] = arr[this.length-1];
             this.length--;//update the length size adter deleting a number
         }
         else
@@ -130,10 +119,9 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
             this.stack.push(arr[index]);//pushing the value that was deleted in order to prepare for a backtrack call
             this.stack.push(index);//pushing the index that was deleted in order to prepare for a backtrack call
             this.stack.push(DELETE);//pushing the insert protocol in order to prepare for a backtrack call
-            for(int i=index; i<this.length; i++)
-            {
-                arr[i] = arr[i+1];
-            }
+
+            arr[index]    = arr[length-1];
+            arr[length-1] = 0;
             this.length--;//update the length size adter deleting a number
         }
         else
@@ -206,14 +194,16 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     return     : The procedure return the successor of the index
     */
     {
-        if(index+1 < this.length && index>=0) //check if the index fit to array's bounds
+        
+        if(index < this.length && index>=0 && arr[index]!=Integer.MAX_VALUE )  //check if the index fit to array's bounds
         {
+
             int min = Integer.MAX_VALUE, minIndex =NOTFOUND;//set the min and minindex
             for (int i=0 ; i<this.length; i++)
             {
                 if(arr[i]>arr[index])
                 {
-                    if(arr[i]<min)//looking for a minimum value above our index's value
+                    if(arr[i]<min ||(arr[i]<=min && arr[i] ==Integer.MAX_VALUE ))//looking for a minimum value above our index's value
                     {
                         min      = arr[i];
                         minIndex = i;
@@ -236,14 +226,15 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     return     : The procedure return the predecessor of the index
     */
     {
-        if(index-1 < this.length && index>=0)//check if the index fit to array's bounds
+        
+        if(index < this.length && index>=0 && arr[index]!=Integer.MIN_VALUE )//check if the index fit to array's bounds
         {
             int max = Integer.MIN_VALUE, maxIndex =NOTFOUND;//set the max and maxindex
             for (int i=0 ; i<this.length; i++)
             {
                 if(arr[i] < arr[index])//looking for a maximum value below our index's value
                 {
-                    if(arr[i]>max)
+                    if(arr[i]>max || (arr[i]>=max && arr[i] ==Integer.MIN_VALUE ))
                     {
                         max      = arr[i];
                         maxIndex = i;

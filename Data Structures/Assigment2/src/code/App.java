@@ -25,8 +25,6 @@ public class App
 
         a.insert(f5);
         a.insert(f7);
-        a.insert(f9);
-        a.insert(f4);
         a.insert(f1);
         //a.insert(f2);
         /*a.insert(f4);
@@ -34,7 +32,7 @@ public class App
         a.insert(f9);
         a.printPreOrder();*/
         a.printPreOrder();
-        a.delete(f4);
+        a.delete(f5);
         a.printPreOrder();
         a.backtrack();
         a.printPreOrder();

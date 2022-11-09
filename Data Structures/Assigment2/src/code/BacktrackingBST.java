@@ -177,7 +177,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     {
         
         if(root == null || node ==null )
-            return;
+            throw new NoSuchElementException("empty tree");
 
         
         if(this.search(root,node))//check that the node we got exist in the bst
@@ -200,7 +200,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     */
     {
         if(root == null || node ==null )
-            return;
+            throw new NoSuchElementException("empty tree");
 
 
         if(this.search(root,node))
@@ -291,6 +291,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     return  : the appopriate delete protocol of the node's deletion. If he has two sons, or if he is a leaf etc'.
     */
     {
+        //case 4:speciel casess with the root
         if(node == root&&(node.left == null || node.right == null))
         {
             if(node.right == null&& node.left ==null)
@@ -378,6 +379,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     return  : the procedure return node's successor.
     */
     {
+        if(node == null)
+            throw new NoSuchElementException("empty tree");
+            
         if(node.right != null)
             return(this.minimum(node.right));//incase the node has more nodes from right
 
@@ -400,6 +404,8 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
     return  : the procedure return node's predecessor.
     */
     {
+        if(node == null)
+            throw new NoSuchElementException("empty tree");
         if(node.left != null)
             return(this.maximum(node.left));//incase the node has more nodes from left
 
@@ -441,7 +447,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
                 Node newNode        = new Node(backTrackNode.getKey(), 1);//create a new node,because we delete one in our last action
                 backTrackNode.key   = key;//update the relevnt key with his old key
                 newNode.right       = backTrackNode.right;//connect the new node with the ancestry's of the relevnt node
-                //newNode.left        = backTrackNode.left;
                 backTrackNode.right = newNode;//connect the relevnt node to the new node we made
                 newNode.parent      = backTrackNode;
                 this.updateBeforeRecall(backTrackNode, DELETE);
@@ -458,7 +463,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
                 break;
 
             case DeletOneSonLeft:
-                backTrackNode.parent.left = backTrackNode;//insert the node that we just delet
+                backTrackNode.parent.left  = backTrackNode;//insert the node that we just delet
                 this.updateBeforeRecall(backTrackNode, DELETE);
                 break;
 
@@ -474,7 +479,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
                 break;
 
             case DeleteNoRightSide:
-                root               = backTrackNode;
+                root                      = backTrackNode;
                 backTrackNode.left.parent = backTrackNode;
                 this.updateBeforeRecall(backTrackNode, DELETE);
                 break;
@@ -482,12 +487,15 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node>
 
     }
     public void updateBeforeRecall(Node node , int protocol)
+    /*
+    parmeter    : Node and int     
+    description : the procedure updates the stack, prepering the adt to recall.
+    */
+
     {
         this.reCallOn      = true;//turn on the recall switch
         this.redoStack.push(node);//push relevent node incase of recall
         this.redoStack.push(protocol);//push the protocol incase of recll
-
-
     }
 //--------------------RETRACK--------------------//
     @Override
