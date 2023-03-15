@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Graph",
+      "request": "launch",
+      "mainClass": "Graph",
+      "projectName": "Topological Sorting_125f8e98"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/Raz/Coding/ComputerScienceDegree/Algorithms/Graphs/Topological Sorting",
+      "program": "c:/Users/Raz/Coding/ComputerScienceDegree/Algorithms/Graphs/Topological Sorting/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch ShortestPath",
+      "request": "launch",
+      "mainClass": "ShortestPath",
+      "projectName": "Dijkstra’s Algorithm_bf15ad5a"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/Raz/Coding/ComputerScienceDegree/Algorithms/Graphs/Dijkstra’s Algorithm",
+      "program": "c:/Users/Raz/Coding/ComputerScienceDegree/Algorithms/Graphs/Dijkstra’s Algorithm/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
