@@ -1,0 +1,21 @@
+
+/* Question 2 */
+export const isPaired: (s: string) => boolean = (s:string) =>{
+    const arr          = stringToArray(s);
+    const str:string[] = [];
+    const parentheses  = R.filter( ch => ch==='{' || ch==='[' || ch==='(' || ch==='}' || ch===']' || ch===')',arr);
+       
+    return R.reduce((acc,curr)=>{
+         
+        if(curr === "{") return R.concat(acc,['}']);
+        else if(curr === "[") return R.concat(acc,[']']);
+        else if(curr === "(") return R.concat(acc,[')']);
+        
+        else if((curr === "}" || curr === "]" || curr === ")")&& R.last(acc) === curr )      
+            return R.slice(0,-1,acc);
+ 
+        else return R.concat(acc,['#']);
+
+     },str,parentheses).length === 0;
+
+}
