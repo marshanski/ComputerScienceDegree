@@ -1,0 +1,123 @@
+;---------------------------------------------------------------------------------
+;Signature      : take(lst,pos)
+;Type           : [(int->Boolean)*list(T1)-> list(T1)]
+;Purpose        : gets a list and a number pos and returns a new list whose elements are the first pos elements of the lists.
+                   if the list is shoerter than the pos then return the list.
+; Pre-condition : true
+; Tests         : (take (list 1 2 3) 2) → '(1 2)
+;---------------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------------
+;Signature      : take-map(lst,func,pos)
+;Type           : [(int->Boolean)*list(T1)-> list(T1)]
+;Purpose        : returns a new list whose elements are the first pos elements mapped by func
+; Pre-condition : true
+; Tests         : (take-map (list 1 2 3) (lambda (x) (* x x)) 2) → '(1 4)
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : take-filter(lst pred pos)
+;Type           : [(T1->Boolean)*List(T1)*(int->boolean)-> list(T1)]
+;Purpose        : returns a new list whose elements are the first pos elements of the list that satisfy the pred.
+; Pre-condition : true
+; Tests         : (take-filter (list 1 2 3) (lambda (x) (> x 3)) 2) → '()
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : sub-size(lst  size)
+;Type           : [(int->Boolean)*list(T1)-> list(T1)]
+;Purpose        : returns a new list of all the sublists of list of length size
+; Pre-condition : true
+; Tests         : (sub-size (list 1 2 3) 3) → '((1 2 3))
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : sub-size-map(lst func size)
+;Type           : [(int->Boolean)*list(T1)-> list(T1)]
+;Purpose        : returns a new list of all the sublists of 𝑙𝑖𝑠𝑡 of length 𝑠𝑖𝑧𝑒 that all their elements are mapped by 𝑓𝑢𝑛𝑐.
+; Pre-condition : true
+; Tests         : (sub-size-map '() 0 (lambda (x) (+ x 1))) → '(())
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : root(tree)
+;Type           : [list(T) -> T]
+;Purpose        : gets a list representing a tree and returns the value of the root
+; Pre-condition : true
+; Tests         : (root '(1 (#t 3 #t) 2) #t) → 1
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : left(tree)
+;Type           : [list(T) -> list(T)]
+;Purpose        : gets a list representing a tree and returns the subtree of the left son, or an empty list if there is no left son.
+; Pre-condition : true
+; Tests         : (left '(1 (#t 3 #t) 2) #t) → (#t 3 #t) 
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : right(tree)
+;Type           : [list(T) -> list(T)]
+;Purpose        : gets a list representing a tree and returns the subtree of the right son, or an empty list if there is no left son.
+; Pre-condition : true
+; Tests         : (right '(1 (#t 3 #t) 2) #t) → 2 
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : count-nodes(tree val)
+;Type           : [list(T)*int -> int]
+;Purpose        : given a list representing a 𝑡𝑟𝑒𝑒 and an atomic 𝑣𝑎𝑙, returns the number of nodes whose value is equal to 𝑣𝑎𝑙.
+; Pre-condition : true
+; Tests         : (count-node '(1 (#t 3 #t) 2) #t) → 2
+;---------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------
+;Signature      : mirror-tree(tree  )
+;Type           : [list(T) -> list(T)]
+;Purpose        : given a list representing a 𝑡𝑟𝑒𝑒, returns the mirrored tree.
+; Pre-condition : true
+; Tests         : (mirror-tree '(1 (#t 3 4) 2)) -> '(1 2 (#t 4 3))
+;---------------------------------------------------------------------------------
+;Signature      : make-ok(val)
+;Type           : [val -> OK(val)]
+;Purpose        : gets a value and returns an ok structure for the 𝑣𝑎𝑙𝑢𝑒 of type result.
+; Pre-condition : true
+; Tests         : (define ok (make-ok 1))
+;---------------------------------------------------------------------------------
+;Signature      : make-error(message)
+;Type           : [message -> EROR(message)]
+;Purpose        : gets an error 𝑚𝑒𝑠𝑠𝑎𝑔𝑒 and returns an error structure for the 𝑚𝑒𝑠𝑠𝑎𝑔𝑒 of type result.
+; Pre-condition : true
+; Tests         : (define error (make-error “some error message”))
+;---------------------------------------------------------------------------------
+;Signature      : ok?(pred)
+;Type           : [pred -> Booolean]
+;Purpose        : type predicate for 𝑜𝑘.
+; Pre-condition : true
+; Tests         : (ok? ok) → #t
+;---------------------------------------------------------------------------------
+;Signature      : error?(pred)
+;Type           : [pred -> Booolean]
+;Purpose        : type predicate for error.
+; Pre-condition : true
+; Tests         : (error? ok) → #f
+;---------------------------------------------------------------------------------
+;Signature      : result?(pred)
+;Type           : [pred -> Booolean]
+;Purpose        : type predicate for result.
+; Pre-condition : true
+; Tests         : (result? ok) → #t
+;---------------------------------------------------------------------------------
+;Signature      : result(val)
+;Type           : [val -> int]
+;Purpose        : gets a 𝑟𝑒𝑠𝑢𝑙𝑡 structure and returns the value it represents, or the error 
+                  message for error. If the given result is not a result, return an error structure with the
+                  message “Error: not a result”
+; Pre-condition : true
+; Tests         : (result->val ok) → 1
+;---------------------------------------------------------------------------------
+;Signature      : bind(func)
+;Type           : [function -> function]
+;Purpose        : bind which given a function 𝑓𝑢𝑛𝑐 from a non-result to
+                  result, returns a new function which given a result, returns the activation of 𝑓𝑢𝑛𝑐 on its
+                  value or an error structure accordingly.
+; Pre-condition : true
+; Tests         : (define inc-result (bind (lambda (x) (make-ok (+ x 1)))))
+;---------------------------------------------------------------------------------
+
+
+
+
+

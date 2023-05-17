@@ -1,0 +1,27 @@
+const evalBound = (exp: BoundExp, env: Env): Result<boolean> =>
+    bind(applyEnv(theGlobalEnv, exp.var.var), (val: Value) =>
+        (val > -1) ?
+        makeOk<boolean>(true):
+        makeOk<boolean>(false)
+        );
+
+
+const evalBound = (exp: BoundExp, env: Env): Result<boolean> =>
+    bind(
+        applyEnv(theGlobalEnv, exp.var.var),
+        (val: Value) =>
+        (val > -1)?
+        makeOk<boolean>(true):
+        makeFailure(`works only on closures: ${val}`)
+        //makeOk<boolean>(false)
+        );
+
+    (applyEnv(theGlobalEnv, exp.var.var).tag === "Failure")?
+    makeOk<boolean>(false):
+    makeOk<boolean>(true);
+
+
+
+    bind(applicativeEval(exp.exp, env), 
+    (val: Value) =>makeOk(makeCompoundSExp(val,0))
+    ) 
